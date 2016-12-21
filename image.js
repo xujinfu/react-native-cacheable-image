@@ -149,8 +149,11 @@ export default class CacheableImage extends React.Component {
             }
 
             // ignore extension
-            const type = url.pathname.replace(/.*\.(.*)/, '$1');
-            const cacheKey = SHA1(cacheable) + '.' + (type.length < url.pathname.length ? type : 'png');
+            let type = url.pathname.replace(/.*\.(.*)/, '$1');
+            if(type && type.indexOf("/")>=0){
+                type="gif";
+            }
+            let cacheKey = SHA1(cacheable) + '.' + (type.length < url.pathname.length ? type : 'gif');
 
             this.checkImageCache(source.uri, url.host, cacheKey);
             this.setState({isRemote: true});
